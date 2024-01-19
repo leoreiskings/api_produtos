@@ -42,7 +42,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           use_existing_version_if_available: false
-          application_name: api_produtos_teste_de_erro
+          application_name: api_produtos
           environment_name: Apiprodutos-env
           version_label: ${{github.SHA}}
           region: us-east-1
