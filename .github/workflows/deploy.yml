@@ -34,6 +34,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
+          
       #Deploy the artifact (JAR) into AWS Beanstalk
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v2
@@ -41,7 +42,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           use_existing_version_if_available: false
-          application_name: api_produtos
+          application_name: api_produtos_teste_de_erro
           environment_name: Apiprodutos-env
           version_label: ${{github.SHA}}
           region: us-east-1
