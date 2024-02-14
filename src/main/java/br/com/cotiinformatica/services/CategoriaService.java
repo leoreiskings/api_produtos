@@ -18,7 +18,6 @@ public class CategoriaService {
 		
 		return categoriasCache.findAll();
 		
-		
 	}
 	
 	
