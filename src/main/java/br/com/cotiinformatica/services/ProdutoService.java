@@ -28,14 +28,14 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutosCache produtosCache;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 
 	public ProdutosDto create(ProdutoCreateCommand command) {
 		
-		
-		ModelMapper modelMapper = new ModelMapper();
-		
-		Produto produto = modelMapper.map(command, Produto.class);
-		
+		Produto produto = modelMapper.map(command, Produto.class);		
 		produto.setCategoria(categoriaRepository.findById(command.getIdCategoria()).get());
 		
 		produtoRepository.save(produto);
@@ -48,13 +48,9 @@ public class ProdutoService {
 		
 	}
 
-	public ProdutosDto update(ProdutoUpdateCommand command) {
-
-		ModelMapper modelMapper = new ModelMapper();
+	public ProdutosDto update(ProdutoUpdateCommand command) {	
 		
-		Produto produto = modelMapper.map(command, Produto.class);
-		
-		produto.setCategoria(categoriaRepository.findById(command.getId()).get());
+		Produto produto =  produtoRepository.findById(command.getId()).get();
 		
 		//gravando o produto no banco postgres
 		produto.setNome(command.getNome());
@@ -67,7 +63,7 @@ public class ProdutoService {
 		//gravando o produto e com o id da categoria no postgres
 		produtoRepository.save(produto);
 		
-		ProdutosDto dto = modelMapper.map (produto, ProdutosDto.class);
+		ProdutosDto dto = modelMapper.map(produto, ProdutosDto.class);
 
 		//gravando o produto no MongoDB 
 		produtosCache.save(dto);
@@ -77,9 +73,7 @@ public class ProdutoService {
 	}
 
 	public ProdutosDto delete(ProdutoDeleteCommand command) {
-		
-		ModelMapper modelMapper = new ModelMapper();
-		
+				
 		//buscando o produto no banco
 		Produto produto = produtoRepository.findById(command.getId()).get();
 		
